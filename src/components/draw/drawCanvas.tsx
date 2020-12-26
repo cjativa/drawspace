@@ -6,7 +6,8 @@ interface IDrawCanvasProps {
     saveOccurred: boolean,
     resetOccurred: boolean,
     fillColor: FILL_COLORS,
-    strokeWidth: STROKE_WIDTHS
+    strokeWidth: STROKE_WIDTHS,
+    eraserOn: boolean
 };
 
 const DrawCanvas = (props: IDrawCanvasProps) => {
@@ -82,10 +83,20 @@ const DrawCanvas = (props: IDrawCanvasProps) => {
         context!.strokeStyle = props.fillColor;
         context!.lineWidth = props.strokeWidth;
 
-        // Draw a line from the previous position to the current one
-        context!.moveTo(previousPosition.offsetX, previousPosition.offsetY);
-        context!.lineTo(offsetX, offsetY);
-        context!.stroke();
+        // Perform erasure if eraser is on
+        if (props.eraserOn) {
+            context!.globalCompositeOperation = 'destination-out';
+            context!.arc(previousPosition.offsetX, previousPosition.offsetY, props.strokeWidth, 0, Math.PI * 2, false);
+            context!.fill();
+        }
+
+        // Otherwise, perform normal drawing
+        else {
+            context!.globalCompositeOperation = 'source-over';
+            context!.moveTo(previousPosition.offsetX, previousPosition.offsetY);
+            context!.lineTo(offsetX, offsetY);
+            context!.stroke();
+        }
 
         setPreviousPosition({ offsetX, offsetY });
     };

@@ -10,6 +10,7 @@ const Draw = () => {
     const [resetOccurred, setResetOccurred] = useState<boolean>(false);
     const [fillColor, setFillColor] = useState<FILL_COLORS>('red');
     const [strokeWidth, setStrokeWidth] = useState<STROKE_WIDTHS>(10);
+    const [eraserOn, setEraserOn] = useState<boolean>(false);
 
     /** Resets the reset state after a reset occurred */
     useEffect(() => {
@@ -36,6 +37,11 @@ const Draw = () => {
         setResetOccurred(true);
     };
 
+    /** Toggles the usage of the eraser */
+    const toggleEraser = () => {
+        setEraserOn(!eraserOn);
+    };
+
     return (
         <div className="draw">
             <p>Draw to your hearts content ✏️</p>
@@ -45,13 +51,16 @@ const Draw = () => {
                 saveOccurred={saveOccurred}
                 resetOccurred={resetOccurred}
                 fillColor={fillColor}
-                strokeWidth={strokeWidth} />
+                strokeWidth={strokeWidth}
+                eraserOn={eraserOn}
+            />
 
             {/** Action buttons */}
             <div className="draw__actions">
                 <DrawStrokeActions
                     setFillColor={setFillColor}
                     setStrokeWidth={setStrokeWidth}
+                    toggleEraser={toggleEraser}
                 />
 
                 <div className="draw__buttons">

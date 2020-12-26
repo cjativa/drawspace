@@ -8,11 +8,11 @@ const strokeWidthsList: Array<STROKE_WIDTHS> = [1, 5, 10, 20, 30];
 
 interface IDrawStrokeActionsProps {
     setFillColor: (color: FILL_COLORS) => void,
-    setStrokeWidth: (width: STROKE_WIDTHS) => void
+    setStrokeWidth: (width: STROKE_WIDTHS) => void,
+    toggleEraser: () => void
 };
 
 const DrawStrokeActions = (props: IDrawStrokeActionsProps) => {
-
 
     /** Updates the selected fill color */
     const onColorClick = (event: any) => {
@@ -47,6 +47,11 @@ const DrawStrokeActions = (props: IDrawStrokeActionsProps) => {
                     onClick={onWidthClick}
                     style={{ width: `${strokeWidth}px`, height: `30px` }} />
                 )}
+            </div>
+
+            {/** Container for eraser tool */}
+            <div className="dsa__eraser">
+                <button onClick={() => props.toggleEraser()} />
             </div>
         </div>
     )

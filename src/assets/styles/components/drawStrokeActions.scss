@@ -1,22 +1,20 @@
 .dsa {
 
     display: grid;
-    grid-template-columns: repeat(2, min-content);
+    grid-template-columns: repeat(3, min-content);
     column-gap: 10px;
 
-    &__colors, &__strokes {
-        display: grid;
-        grid-template-columns: repeat(5, 1fr);
-        column-gap: 5px;
-
+    & > div {
         background-color: #ffffff;
         border: 1px solid #6B2D5C;
         border-radius: 8px; 
         padding: 10px;
     }
 
-    &__strokes {
-        grid-template-columns: repeat(5, min-content);
+    &__colors, &__strokes {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        column-gap: 5px;
     }
 
     .circle-btn {
