@@ -4,13 +4,6 @@
     grid-template-columns: repeat(3, min-content);
     column-gap: 10px;
 
-    & > div {
-        background-color: #ffffff;
-        border: 1px solid #6B2D5C;
-        border-radius: 8px; 
-        padding: 10px;
-    }
-
     &__colors, &__strokes {
         display: grid;
         grid-template-columns: repeat(5, 1fr);
