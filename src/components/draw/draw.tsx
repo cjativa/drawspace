@@ -2,12 +2,16 @@ import React, { useEffect, useState } from 'react';
 
 import DrawCanvas from './drawCanvas';
 import DrawStrokeActions, { FILL_COLORS, STROKE_WIDTHS } from './drawStrokeActions';
-
+import DrawGeneralActions from './drawGeneralActions';
 
 const Draw = () => {
 
     const [saveOccurred, setSaveOccurred] = useState<boolean>(false);
     const [resetOccurred, setResetOccurred] = useState<boolean>(false);
+    const [isPrivate, setIsPrivate] = useState<boolean>(true);
+
+    // Stroke color, width, and usage of erased are toggled via 
+    // DrawStrokeActions component and passed from here to DrawCanvas
     const [fillColor, setFillColor] = useState<FILL_COLORS>('red');
     const [strokeWidth, setStrokeWidth] = useState<STROKE_WIDTHS>(10);
     const [eraserOn, setEraserOn] = useState<boolean>(false);
@@ -63,18 +67,12 @@ const Draw = () => {
                     toggleEraser={toggleEraser}
                 />
 
-                <div className="draw__buttons">
-                    <button
-                        className="draw__reset brand-btn"
-                        onClick={onResetClick}>
-                        Reset Drawing
-                    </button>
-                    <button
-                        className="draw__save brand-btn"
-                        onClick={onSaveClick}>
-                        Save Drawing
-                    </button>
-                </div>
+                <DrawGeneralActions
+                    onResetClick={onResetClick}
+                    onSaveClick={onSaveClick}
+                    setIsPrivate={setIsPrivate}
+                    isPrivate={isPrivate}
+                />
             </div>
         </div>
     )

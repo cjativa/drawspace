@@ -28,7 +28,7 @@ const DrawStrokeActions = (props: IDrawStrokeActionsProps) => {
         <div className="dsa">
 
             {/** Generate the buttons for the fill colors */}
-            <div className="dsa__colors">
+            <div className="dsa__colors panel">
                 {fillColorsList.map((fillColor, index) => <button
                     key={`${fillColor}__${index}`}
                     name={fillColor}
@@ -39,7 +39,7 @@ const DrawStrokeActions = (props: IDrawStrokeActionsProps) => {
             </div>
 
             {/** Generate the buttons for the stroke widths */}
-            <div className="dsa__strokes">
+            <div className="dsa__strokes panel">
                 {strokeWidthsList.map((strokeWidth, index) => <button
                     key={`${strokeWidth}__${index}`}
                     name={`${strokeWidth}`}
@@ -50,7 +50,7 @@ const DrawStrokeActions = (props: IDrawStrokeActionsProps) => {
             </div>
 
             {/** Container for eraser tool */}
-            <div className="dsa__eraser">
+            <div className="dsa__eraser panel">
                 <button onClick={() => props.toggleEraser()} />
             </div>
         </div>
