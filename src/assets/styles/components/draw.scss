@@ -4,31 +4,19 @@
     justify-content: center;
     align-items: center;
 
-    &__save {
-        background-color: #6B2D5C;
-        color: #ffffff;
-    }
-
-    &__reset {
-        background-color: #ffffff;
-        border-color: #6B2D5C;
-        color: #6B2D5C;
-    }
-
     &__actions {
         width: 100%;
         display: grid;
         grid-template-columns: min-content min-content;
         justify-content: space-around;
     }
-
-
-
-    &__buttons {
-        display: grid;
-        grid-template-columns: repeat(2, max-content);
-        column-gap: 10px;
-    }
-
-
 }
+
+.panel {
+        background-color: #ffffff;
+        border: 1px solid #6B2D5C;
+        border-radius: 8px; 
+        padding: 10px;
+        align-items: center;
+}
+
