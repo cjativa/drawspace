@@ -12,6 +12,8 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 
+    background-color: #E2C290;
+
     // font-family: $font-family__primary;
     // font-size: $font-size__body;
 }
@@ -22,4 +24,14 @@ body {
 
 a {
     text-decoration: none;
+}
+
+.brand-btn {
+    padding: 15px 15px;
+    border-radius: 8px; 
+
+    border: none;
+    outline: none;
+
+    border: 1px solid #ffffff00;
 }
