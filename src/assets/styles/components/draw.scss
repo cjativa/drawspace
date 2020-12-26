@@ -22,16 +22,7 @@
         justify-content: space-around;
     }
 
-    &__colors {
-        display: grid;
-        grid-template-columns: repeat(5, 1fr);
-        column-gap: 5px;
 
-        background-color: #ffffff;
-        border: 1px solid #6B2D5C;
-        border-radius: 8px; 
-        padding: 10px;
-    }
 
     &__buttons {
         display: grid;
@@ -39,30 +30,5 @@
         column-gap: 10px;
     }
 
-    .circle-btn {
-        height: 40px;
-        width: 40px;
-        border-radius: 50%;
-        border: none;
 
-        &.red {
-            background-color: red;
-        }
-
-        &.green {
-            background-color: green;
-        }
-
-        &.yellow {
-            background-color: yellow;
-        }
-
-        &.purple {
-            background-color: purple;
-        }
-
-        &.blue {
-            background-color: blue;
-        }
-    }
 }

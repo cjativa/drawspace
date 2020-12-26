@@ -1,11 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
 
-import { FILL_COLORS } from './draw';
+import { FILL_COLORS, STROKE_WIDTHS } from './drawStrokeActions';
 
 interface IDrawCanvasProps {
     saveOccurred: boolean,
     resetOccurred: boolean,
-    fillColor: FILL_COLORS
+    fillColor: FILL_COLORS,
+    strokeWidth: STROKE_WIDTHS
 };
 
 const DrawCanvas = (props: IDrawCanvasProps) => {
@@ -29,14 +30,12 @@ const DrawCanvas = (props: IDrawCanvasProps) => {
         if (context) {
             context.lineJoin = 'round';
             context.lineCap = 'round';
-            context.lineWidth = 5;
         }
     }, [context]);
 
     /** Handles resetting the canvas */
     useEffect(() => {
         if (props.resetOccurred) {
-            console.log(`A reset occurred`);
             context!.clearRect(0, 0, canvasElement.current!.width, canvasElement.current!.height);
         }
     }, [props.resetOccurred, context]);
@@ -81,6 +80,7 @@ const DrawCanvas = (props: IDrawCanvasProps) => {
 
         context!.beginPath();
         context!.strokeStyle = props.fillColor;
+        context!.lineWidth = props.strokeWidth;
 
         // Draw a line from the previous position to the current one
         context!.moveTo(previousPosition.offsetX, previousPosition.offsetY);

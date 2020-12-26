@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react';
 
 import DrawCanvas from './drawCanvas';
+import DrawStrokeActions, { FILL_COLORS, STROKE_WIDTHS } from './drawStrokeActions';
 
-export type FILL_COLORS = 'red' | 'green' | 'yellow' | 'purple' | 'blue';
 
 const Draw = () => {
 
     const [saveOccurred, setSaveOccurred] = useState<boolean>(false);
     const [resetOccurred, setResetOccurred] = useState<boolean>(false);
     const [fillColor, setFillColor] = useState<FILL_COLORS>('red');
+    const [strokeWidth, setStrokeWidth] = useState<STROKE_WIDTHS>(10);
 
     /** Resets the reset state after a reset occurred */
     useEffect(() => {
@@ -35,11 +36,6 @@ const Draw = () => {
         setResetOccurred(true);
     };
 
-    /** Updates the selected fill color */
-    const onColorClick = (event: any) => {
-        setFillColor(event.target.name);
-    };
-
     return (
         <div className="draw">
             <p>Draw to your hearts content ✏️</p>
@@ -47,18 +43,16 @@ const Draw = () => {
             {/** Canvas for drawing */}
             <DrawCanvas
                 saveOccurred={saveOccurred}
-                resetOccurred={resetOccurred} 
-                fillColor={fillColor} />
+                resetOccurred={resetOccurred}
+                fillColor={fillColor}
+                strokeWidth={strokeWidth} />
 
             {/** Action buttons */}
             <div className="draw__actions">
-                <div className="draw__colors">
-                    <button name="red" className="circle-btn red" onClick={onColorClick} />
-                    <button name="green" className="circle-btn green" onClick={onColorClick} />
-                    <button name="yellow" className="circle-btn yellow" onClick={onColorClick} />
-                    <button name="purple" className="circle-btn purple" onClick={onColorClick} />
-                    <button name="blue" className="circle-btn blue" onClick={onColorClick} />
-                </div>
+                <DrawStrokeActions
+                    setFillColor={setFillColor}
+                    setStrokeWidth={setStrokeWidth}
+                />
 
                 <div className="draw__buttons">
                     <button
