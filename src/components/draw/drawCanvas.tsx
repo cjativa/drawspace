@@ -1,8 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
 
+import { FILL_COLORS } from './draw';
+
 interface IDrawCanvasProps {
     saveOccurred: boolean,
     resetOccurred: boolean,
+    fillColor: FILL_COLORS
 };
 
 const DrawCanvas = (props: IDrawCanvasProps) => {
@@ -77,7 +80,7 @@ const DrawCanvas = (props: IDrawCanvasProps) => {
         const { offsetX, offsetY } = newPosition;
 
         context!.beginPath();
-        context!.strokeStyle = 'red';
+        context!.strokeStyle = props.fillColor;
 
         // Draw a line from the previous position to the current one
         context!.moveTo(previousPosition.offsetX, previousPosition.offsetY);
