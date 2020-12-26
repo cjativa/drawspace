@@ -1,0 +1,24 @@
+.dga {
+    display: grid;
+    grid-template-columns: repeat(2, min-content);
+    column-gap: 10px;
+
+    &__buttons, &__privacy {
+        display: grid;
+        grid-template-columns: repeat(2, max-content);
+        column-gap: 10px;
+    }
+
+    &__save {
+        background-color: #6B2D5C;
+        color: #ffffff;
+    }
+
+    &__reset {
+        background-color: #ffffff;
+        border-color: #F5A3AF;
+        color: #F5A3AF;
+    }
+
+    
+}
