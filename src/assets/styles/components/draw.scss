@@ -1,0 +1,68 @@
+.draw {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    &__save {
+        background-color: #6B2D5C;
+        color: #ffffff;
+    }
+
+    &__reset {
+        background-color: #ffffff;
+        border-color: #6B2D5C;
+        color: #6B2D5C;
+    }
+
+    &__actions {
+        width: 100%;
+        display: grid;
+        grid-template-columns: min-content min-content;
+        justify-content: space-around;
+    }
+
+    &__colors {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        column-gap: 5px;
+
+        background-color: #ffffff;
+        border: 1px solid #6B2D5C;
+        border-radius: 8px; 
+        padding: 10px;
+    }
+
+    &__buttons {
+        display: grid;
+        grid-template-columns: repeat(2, max-content);
+        column-gap: 10px;
+    }
+
+    .circle-btn {
+        height: 40px;
+        width: 40px;
+        border-radius: 50%;
+        border: none;
+
+        &.red {
+            background-color: red;
+        }
+
+        &.green {
+            background-color: green;
+        }
+
+        &.yellow {
+            background-color: yellow;
+        }
+
+        &.purple {
+            background-color: purple;
+        }
+
+        &.blue {
+            background-color: blue;
+        }
+    }
+}
