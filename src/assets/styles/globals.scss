@@ -17,6 +17,12 @@ body {
     // font-family: $font-family__primary;
     // font-size: $font-size__body;
 }
+#root, .App {
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+}
 
 .brand-link {
     text-decoration: none;
