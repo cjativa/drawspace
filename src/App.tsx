@@ -1,7 +1,7 @@
 import React from 'react';
-import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Draw from './components/draw/draw';
-
+import Authentication from './components/authentication/authentication';
 
 const App = () => {
   return (
@@ -17,13 +17,14 @@ const App = () => {
 
           {/** Sign up page */}
           <Route path="/sign-up">
-            {/* <SignUp /> */}
+            <Authentication />
           </Route>
 
           {/** Login page */}
           <Route path="/login">
-            {/* <Login /> */}
+            <Authentication />
           </Route>
+
         </Switch>
       </BrowserRouter>
 
