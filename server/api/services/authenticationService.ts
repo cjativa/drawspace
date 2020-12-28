@@ -1,17 +1,11 @@
 import DatabaseClient from '../../database/databaseClient';
 import CryptoService from './cryptoService';
-
-export interface IUser {
-    id: number,
-    name: string,
-    username: string,
-    password?: string
-};
+import { IUser } from './userService';
 
 export default class AuthenticationService {
 
     /** Verifies the credentials match an existing user */
-    public static async verifySignInCredentials(username: string, password: string): Promise<IUser> {
+    public static async verifySignInCredentials(username: string, password: string): Promise<IUser | undefined> {
 
         // Encrypt the password so we can find the matching user
         const encryptedPassword = CryptoService.encrypt(password);
@@ -47,7 +41,7 @@ export default class AuthenticationService {
     /** Checks if the provided username is already registered */
     public static async checkUserExistence(username: string): Promise<boolean> {
 
-        const { exists } = (await DatabaseClient.performQuery<{ exists: boolean}>(`
+        const { exists } = (await DatabaseClient.performQuery<{ exists: boolean }>(`
         SELECT EXISTS (
             SELECT 1 FROM "users" 
             WHERE username = $1
