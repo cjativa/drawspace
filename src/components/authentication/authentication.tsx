@@ -1,9 +1,13 @@
-import React from 'react';
-import { Switch, Route, useLocation, Link } from "react-router-dom";
+import React, { useState } from 'react';
+import { Switch, Route, useLocation, Link, Redirect } from "react-router-dom";
 import SignUp from './signUp';
 import Login from './login';
+import AuthenticationService from '../../services/authenticationService';
 
 const Authentication = () => {
+
+    // Set our initial auth state
+    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(AuthenticationService.isLoggedIn());
 
     // Get the current path and use it to determine the link classes
     const { pathname } = useLocation();
@@ -16,6 +20,20 @@ const Authentication = () => {
         : ''
         ;
 
+    /** Updates the local storage authentication state */
+    const updateLoggedIn = (loggedIn: boolean) => {
+
+        // Update it in storage and this component
+        AuthenticationService.persistLoginState(loggedIn);
+        setIsLoggedIn(loggedIn);
+    };
+
+    // If we're logged in, let's go to the draw screen
+    if (isLoggedIn) {
+        return (
+            <Redirect to="/draw" />
+        )
+    }
 
     return (
         <div className="auth">
@@ -37,12 +55,12 @@ const Authentication = () => {
                 <Switch>
                     {/** Display login component */}
                     <Route path="/login">
-                        <Login />
+                        <Login updateLoggedIn={updateLoggedIn} />
                     </Route>
 
                     {/** Display sign-up component */}
                     <Route path="/sign-up">
-                        <SignUp />
+                        <SignUp updateLoggedIn={updateLoggedIn} />
                     </Route>
                 </Switch>
             </div>

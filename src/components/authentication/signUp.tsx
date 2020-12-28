@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const SignUp = () => {
+const SignUp = (props: any) => {
 
     const [name, setName] = useState('');
     const [username, setUsername] = useState('');
@@ -46,6 +46,7 @@ const SignUp = () => {
                 <input name="password" value={password} onChange={onInputChange} type="password" />
             </div>
 
+            <button className="auth__btn brand-btn">Sign Up</button>
         </div>
     )
 };
