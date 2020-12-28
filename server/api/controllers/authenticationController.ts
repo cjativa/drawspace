@@ -18,7 +18,7 @@ export default class AuthenticationController {
         if (user) {
             response
                 .status(200)
-                .json({ token: AuthenticationController.generateJwt(user.name, username) });
+                .json({ token: AuthenticationController.generateJwt(user.id, username) });
         }
 
         // User was not located with those credentials
@@ -53,10 +53,10 @@ export default class AuthenticationController {
     };
 
     /** Generates a JWT with the provided payload. Expires in 1hr from issuance */
-    private static generateJwt(name: string, username: string): string {
+    private static generateJwt(userId: number, username: string): string {
 
         // Sign the jwt to expire in 1 day
-        const signedJwt = jwt.sign({ username, name }, Config.jwtSecretKey, { expiresIn: '1h' });
+        const signedJwt = jwt.sign({ username, userId }, Config.jwtSecretKey, { expiresIn: '1h' });
         return signedJwt;
     }
 };
