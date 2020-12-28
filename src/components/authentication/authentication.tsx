@@ -38,31 +38,35 @@ const Authentication = () => {
     return (
         <div className="auth">
 
-            {/** Heading with animation */}
-            <div className="auth__header">
-                <h1>
-                    <span className="brand-green">Draw</span>
-                    <span className="brand-pink">Space.</span>
-                </h1>
-                <p className="subtitle">
-                    <Link to="/login" className={loginClassName}>Login</Link>
-                    <span> | </span>
-                    <Link to="/sign-up" className={signUpClassName}>Sign Up</Link>
-                </p>
-            </div>
+            <div className="auth__container">
 
-            <div className="auth__body">
-                <Switch>
-                    {/** Display login component */}
-                    <Route path="/login">
-                        <Login updateLoggedIn={updateLoggedIn} />
-                    </Route>
+                {/** Heading with animation */}
+                <div className="auth__header">
+                    <h1>
+                        <span className="brand-green">Draw</span>
+                        <span className="brand-pink">Space.</span>
+                    </h1>
+                    <p className="subtitle">
+                        <Link to="/login" className={loginClassName}>Login</Link>
+                        <span> | </span>
+                        <Link to="/sign-up" className={signUpClassName}>Sign Up</Link>
+                    </p>
+                </div>
 
-                    {/** Display sign-up component */}
-                    <Route path="/sign-up">
-                        <SignUp updateLoggedIn={updateLoggedIn} />
-                    </Route>
-                </Switch>
+                <div className="auth__body">
+                    <Switch>
+                        {/** Display login component */}
+                        <Route path="/login">
+                            <Login updateLoggedIn={updateLoggedIn} />
+                        </Route>
+
+                        {/** Display sign-up component */}
+                        <Route path="/sign-up">
+                            <SignUp updateLoggedIn={updateLoggedIn} />
+                        </Route>
+                    </Switch>
+                </div>
+
             </div>
         </div>
     )

@@ -1,21 +1,28 @@
 .auth {
     flex: 1;
+    background-color: #292424;
+    padding: 0 10px;
 
-    display: grid;
-    grid-template-rows: 1fr 2fr;
-    align-content: center;
-    justify-items: center;
-    row-gap: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 
-    background-color: #ffffff;
+    &__container {
+        display: grid;
+        grid-template-rows: 1fr max-content;
+        align-content: center;
+        justify-items: center;
+        row-gap: 20px; 
 
-    &__header{
-        align-self: end;
+        padding: 40px 30px;
+        background-color: #ffffff;
+        border-radius: 8px;
+
+        height: 650px;
     }
 
     &__body {
-        width: 100%;
-        padding: 0 20px;
     }
 
     &__btn {
@@ -32,5 +39,23 @@
 
     .subtitle {
         text-align: center;
+    }
+
+    @media (min-width: 640px) {
+        padding: 0 0px;
+        
+        &__body {
+            width: 420px;
+        }
+    }
+    
+    @media (min-width: 768px) {
+        
+    }
+    
+    @media (min-width: 1024px) {
+    }
+    
+    @media (min-width: 1280px) {
     }
 }
