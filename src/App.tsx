@@ -1,7 +1,9 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Draw from './components/draw/draw';
+import DrawingList from './components/drawingList/drawingList';
 import Authentication from './components/authentication/authentication';
+import ProtectedRoute from './components/protectedRoute';
 
 const App = () => {
   return (
@@ -10,9 +12,18 @@ const App = () => {
       <BrowserRouter>
         <Switch>
 
+          {/** Drawing list page */}
+          <Route path="/drawings">
+            <ProtectedRoute>
+              <DrawingList />
+            </ProtectedRoute>
+          </Route>
+
           {/** Draw page */}
           <Route path="/draw">
-            <Draw />
+            <ProtectedRoute>
+              <Draw />
+            </ProtectedRoute >
           </Route>
 
           {/** Sign up page */}
