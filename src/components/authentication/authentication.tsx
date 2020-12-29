@@ -21,10 +21,10 @@ const Authentication = () => {
         ;
 
     /** Updates the local storage authentication state */
-    const updateLoggedIn = (loggedIn: boolean) => {
+    const updateLoggedIn = (loggedIn: boolean, token: string) => {
 
         // Update it in storage and this component
-        AuthenticationService.persistLoginState(loggedIn);
+        AuthenticationService.persistLoginState(loggedIn, token);
         setIsLoggedIn(loggedIn);
     };
 

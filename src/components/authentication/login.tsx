@@ -30,7 +30,7 @@ const Login = (props: any) => {
         setLoginResponse(authResponse);
 
         // Pass up the login state to the auth component
-        props.updateLoggedIn(authResponse.success);
+        props.updateLoggedIn(authResponse.success, authResponse.token);
     };
 
     return (
