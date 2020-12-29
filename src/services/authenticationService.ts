@@ -38,6 +38,36 @@ export default class AuthenticationService {
         }
     };
 
+    /** Performs request to the API for signing up this user */
+    public static async performSignUp(name: string, username: string, password: string): Promise<AuthenticationResponse> {
+
+        const response = await ApiService.performRequest({
+            endpoint: 'auth/sign-up',
+            data: { name, username, password },
+            method: 'POST'
+        });
+
+        // Login was successful
+        if (response.status === 200) {
+
+            // Update the API service as we're now authenticated
+            const { token } = response.data;
+
+            return {
+                success: true,
+                token
+            }
+        }
+
+        // Login was unsuccessful
+        else {
+            return {
+                success: false,
+                message: response.data
+            }
+        }
+    };
+
     /** Persist the login state into local storage */
     public static persistLoginState(loggedIn: boolean, token: string) {
         localStorage.setItem('signedIn', loggedIn.toString());

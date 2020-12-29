@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import AuthenticationService, { AuthenticationResponse } from '../../services/authenticationService';
 
 const SignUp = (props: any) => {
 
     const [name, setName] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [signUpResponse, setSignUpResponse] = useState<AuthenticationResponse | null>(null);
 
     /** Manages updating the state variables for the form inputs */
     const onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -22,6 +24,17 @@ const SignUp = (props: any) => {
         else if (name === 'password') {
             setPassword(value);
         }
+    };
+
+    /** Handles the sign up click */
+    const onSignUpClick = async () => {
+
+        // Sign up and store the response
+        const authResponse = await AuthenticationService.performSignUp(name, username, password);
+        setSignUpResponse(authResponse);
+
+        // Pass up the login state to the auth component
+        props.updateLoggedIn(authResponse.success, authResponse.token);
     };
 
     return (
@@ -46,7 +59,16 @@ const SignUp = (props: any) => {
                 <input name="password" value={password} onChange={onInputChange} type="password" />
             </div>
 
-            <button className="auth__btn brand-btn">Sign Up</button>
+            <div className="auth-btn">
+                <button onClick={onSignUpClick} className="auth__btn brand-btn">Sign Up</button>
+            </div>
+
+            { /** Display error content when the sign up response is available */
+                (signUpResponse && signUpResponse.success === false) &&
+                <div className="auth__error">
+                    <p>There was an error logging you in — {signUpResponse.message} </p>
+                </div>
+            }
         </div>
     )
 };

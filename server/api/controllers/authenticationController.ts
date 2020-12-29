@@ -24,8 +24,8 @@ export default class AuthenticationController {
         // User was not located with those credentials
         else {
             response
-            .status(403)
-            .json('Error: Invalid credentials for sign-in');
+                .status(403)
+                .json('Error: Invalid credentials for sign-in');
         }
     };
 
@@ -43,12 +43,12 @@ export default class AuthenticationController {
                 .json('Error: That username is already in use');
         }
 
-        // Otherwise, proceed with sign up
+        // Otherwise, proceed with sign up and issue a JWT
         else {
             const createdUser = await AuthenticationService.registerCredentials(name, username, password);
             response
                 .status(200)
-                .json('Success: User was created');
+                .json({ token: AuthenticationController.generateJwt(createdUser.id, username) });
         }
     };
 
