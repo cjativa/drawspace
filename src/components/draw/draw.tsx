@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-
+import { Link } from 'react-router-dom';
 import DrawCanvas from './drawCanvas';
 import DrawStrokeActions, { FILL_COLORS, STROKE_WIDTHS } from './drawStrokeActions';
 import DrawGeneralActions from './drawGeneralActions';
@@ -93,7 +93,8 @@ const Draw = () => {
     return (
         <div className="draw">
             <p className="draw__subtitle">
-                Draw to your hearts content ✏️
+                <Link to="/drawings">Back to List</Link> |
+                    Draw to your hearts content ✏️
                 {saveSuccess &&
                     <span>
                         Save was successful
