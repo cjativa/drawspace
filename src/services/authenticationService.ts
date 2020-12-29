@@ -18,7 +18,7 @@ export default class AuthenticationService {
         });
 
         // Login was successful
-        if (response.status == 200) {
+        if (response.status === 200) {
 
             // Update the API service as we're now authenticated
             const authToken = response.data;
