@@ -3,12 +3,14 @@ import React, { useEffect, useState, useRef } from 'react';
 import DrawCanvas from './drawCanvas';
 import DrawStrokeActions, { FILL_COLORS, STROKE_WIDTHS } from './drawStrokeActions';
 import DrawGeneralActions from './drawGeneralActions';
+import UserService from '../../services/userService';
 
 const Draw = () => {
 
     const [saveOccurred, setSaveOccurred] = useState<boolean>(false);
     const [resetOccurred, setResetOccurred] = useState<boolean>(false);
-    const [isPrivate, setIsPrivate] = useState<boolean>(true);
+    const [isPublic, setIsPublic] = useState<boolean>(false);
+    const [saveSuccess, setSaveSuccess] = useState<boolean | null>(null);
 
     // Stroke color, width, and usage of erased are toggled via 
     // DrawStrokeActions component and passed from here to DrawCanvas
@@ -16,7 +18,8 @@ const Draw = () => {
     const [strokeWidth, setStrokeWidth] = useState<STROKE_WIDTHS>(10);
     const [eraserOn, setEraserOn] = useState<boolean>(false);
 
-    let elapsedDrawingTime = useRef<number>(0);
+    const elapsedDrawingTime = useRef<number>(0);
+    const drawingData = useRef<string>('');
 
     /** On component mount, start the timer */
     useEffect(() => {
@@ -26,30 +29,48 @@ const Draw = () => {
         }, 1000);
     }, []);
 
-    /** Resets the reset state after a reset occurred */
+    /** When reset occurs, set it back to initial state afterward */
     useEffect(() => {
-        if (resetOccurred === true) {
+        if (resetOccurred) {
             setResetOccurred(false);
+
+            // Reset some of the state
+            elapsedDrawingTime.current = 0;
+            drawingData.current = '';
             setFillColor('red');
+            setStrokeWidth(10);
         }
+
     }, [resetOccurred]);
 
-    /** Resets the save state after a save occurred */
+    /** Perform actions when the save occurs */
     useEffect(() => {
-        if (saveOccurred === true) {
-            setSaveOccurred(false);
+
+        const handleSave = async () => {
+            // Save the drawing and update the state
+            const drawingSave = await UserService.performDrawingSave(drawingData.current, elapsedDrawingTime.current, isPublic);
+            setSaveSuccess(drawingSave.success);
+
+            // After 2 seconds, reset the save success
+            setTimeout(() => {
+                setSaveSuccess(null);
+                setSaveOccurred(false);
+            }, 2000);
+        };
+
+        if (saveOccurred) {
+            handleSave();
         }
-    }, [saveOccurred]);
+
+    }, [saveOccurred, drawingData, elapsedDrawingTime]);
 
     /** Performs drawing saving workflow */
-    const onSaveClick = () => {
-        console.log(elapsedDrawingTime);
+    const onSaveClick = async () => {
         setSaveOccurred(true);
     };
 
     /** Performs drawing reset workflow */
     const onResetClick = () => {
-        elapsedDrawingTime.current = 0;
         setResetOccurred(true);
     };
 
@@ -71,7 +92,14 @@ const Draw = () => {
 
     return (
         <div className="draw">
-            <p className="draw__subtitle">Draw to your hearts content ✏️</p>
+            <p className="draw__subtitle">
+                Draw to your hearts content ✏️
+                {saveSuccess &&
+                    <span>
+                        Save was successful
+                    </span>
+                }
+            </p>
 
             {/** Canvas for drawing */}
             <DrawCanvas
@@ -80,6 +108,7 @@ const Draw = () => {
                 fillColor={fillColor}
                 strokeWidth={strokeWidth}
                 eraserOn={eraserOn}
+                drawingData={drawingData}
             />
 
             {/** Action buttons */}
@@ -93,8 +122,8 @@ const Draw = () => {
                 <DrawGeneralActions
                     onResetClick={onResetClick}
                     onSaveClick={onSaveClick}
-                    setIsPrivate={setIsPrivate}
-                    isPrivate={isPrivate}
+                    setIsPublic={setIsPublic}
+                    isPublic={isPublic}
                 />
             </div>
         </div>

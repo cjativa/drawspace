@@ -5,6 +5,8 @@ import { FILL_COLORS, STROKE_WIDTHS } from './drawStrokeActions';
 interface IDrawCanvasProps {
     saveOccurred: boolean,
     resetOccurred: boolean,
+    drawingData: React.MutableRefObject<string>,
+
     fillColor: FILL_COLORS,
     strokeWidth: STROKE_WIDTHS,
     eraserOn: boolean
@@ -40,6 +42,14 @@ const DrawCanvas = (props: IDrawCanvasProps) => {
             context!.clearRect(0, 0, canvasElement.current!.width, canvasElement.current!.height);
         }
     }, [props.resetOccurred, context]);
+
+    /** Handles saving the canvas to base64 */
+    useEffect(() => {
+        if (props.saveOccurred) {
+            const dataUrl = canvasElement.current?.toDataURL()!;
+            props.drawingData.current = dataUrl;
+        }
+    }, [props.saveOccurred, props.drawingData]);
 
     /** Function that handles drawing on mouse down */
     const onMouseDown = (event: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => {

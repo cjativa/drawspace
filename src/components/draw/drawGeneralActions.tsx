@@ -3,8 +3,8 @@ import React from 'react';
 interface DrawGeneralActionsProps {
     onResetClick: () => void,
     onSaveClick: () => void,
-    setIsPrivate: (isPrivate: boolean) => void,
-    isPrivate: boolean
+    setIsPublic: (isPublic: boolean) => void,
+    isPublic: boolean
 }
 
 const DrawGeneralActions = (props: DrawGeneralActionsProps) => {
@@ -12,11 +12,11 @@ const DrawGeneralActions = (props: DrawGeneralActionsProps) => {
     /** Handles different radio buttons being selected */
     const onPrivacyChange = (value: string) => {
         if (value === 'public') {
-            props.setIsPrivate(false);
+            props.setIsPublic(true);
         }
 
         else if (value === 'private') {
-            props.setIsPrivate(true);
+            props.setIsPublic(false);
         }
     };
 
@@ -27,14 +27,14 @@ const DrawGeneralActions = (props: DrawGeneralActionsProps) => {
             <div className="dga__privacy panel">
                 <div className="dpa__rb" onClick={(event) => onPrivacyChange('public')}>
                     <input type="radio" name="privacy" value="public"
-                        checked={props.isPrivate === false}
+                        checked={props.isPublic === true}
                         onChange={(event) => onPrivacyChange(event.target.value)}
                     />
                     <label>Public</label>
                 </div>
                 <div className="dpa__rb" onClick={(event) => onPrivacyChange('private')}>
                     <input type="radio" name="privacy" value="private"
-                        checked={props.isPrivate === true}
+                        checked={props.isPublic === false}
                         onChange={(event) => onPrivacyChange(event.target.value)} />
                     <label>Private</label>
                 </div>
