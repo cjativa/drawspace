@@ -38,28 +38,32 @@ const DrawingList = () => {
                     <span>Visibility</span>
                     <span>Delete</span>
                 </div>
-                {drawings.length > 0 && drawings.map((drawing, index) => {
 
-                    const visibilityVal = (drawing.public)
-                        ? <Link to={`/draw/${drawing.public_url}`}>Public</Link>
-                        : <span>Private</span>;
+                <div className="bottom">
+                    {drawings.length > 0 && drawings.map((drawing, index) => {
 
-                    const timeVal = new Date(drawing.creation_time).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric' });
+                        const visibilityVal = (drawing.public)
+                            ? <Link to={`/draw/${drawing.public_url}`}>Public</Link>
+                            : <span>Private</span>;
 
-                    return (
-                        <div className="drawing-list__item" key={`${drawing.id}__${index}`}>
-                            <div className="item-header">
-                                <span>{timeVal}</span>
-                                <span>{drawing.elapsed_time} seconds</span>
-                                <span>{visibilityVal}</span>
-                                <button id={drawing.id} onClick={onDeleteClick}>Delete</button>
+                        const timeVal = new Date(drawing.creation_time).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric' });
+
+                        return (
+                            <div className="drawing-list__item" key={`${drawing.id}__${index}`}>
+                                <div className="item-header">
+                                    <span>{timeVal}</span>
+                                    <span>{drawing.elapsed_time} seconds</span>
+                                    <span>{visibilityVal}</span>
+                                    <button id={drawing.id} onClick={onDeleteClick}>Delete</button>
+                                </div>
+                                <div className="item-body">
+                                    <img height="50px" width="50px" src={drawing.data} />
+                                </div>
                             </div>
-                            <div className="item-body">
-                                <img height="50px" width="50px" src={drawing.data} />
-                            </div>
-                        </div>
-                    )
-                })}
+                        )
+                    })}
+                </div>
+
             </div>
         </div>
     )

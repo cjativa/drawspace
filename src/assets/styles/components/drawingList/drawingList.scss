@@ -20,8 +20,9 @@
         display: grid;
         grid-template-rows: min-content 1fr;
         grid-template-columns: 1fr;
- 
-        row-gap: 20px; 
+        justify-content: start;
+
+        row-gap: 50px; 
 
         padding: 40px 30px;
         background-color: #ffffff;
@@ -39,6 +40,12 @@
 
     .top {
         font-weight: bold;
+    }
+
+    .bottom {
+        display: grid;
+        row-gap: 20px;
+        align-content: start;
     }
 
     img {
