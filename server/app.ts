@@ -8,7 +8,7 @@ const build = join(__dirname, '../build');
 const index = join(build, 'index.html');
 
 app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
+app.use(express.json({ limit: '50mb' }));
 app.use(express.static(build, { index: false, etag: false }));
 
 app.use('/api', ApiRouter);
