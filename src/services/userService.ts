@@ -7,6 +7,17 @@ export interface IDrawingSave {
 
 export default class UserService {
 
+    /** Performs request for retrieving details for the user */
+    public static async retrieveDetails(): Promise<any> {
+
+        const response = await ApiService.performRequest<IDrawingSave>({
+            endpoint: 'user',
+            method: 'GET'
+        });
+
+        // Login was successful
+        return response.data
+    };
     /** Performs request for saving a drawing to the user's account */
     public static async performDrawingSave(drawingData: string, timeElapsed: number, isPublic: boolean): Promise<IDrawingSave> {
 
