@@ -21,8 +21,8 @@ const DrawCanvas = (props: IDrawCanvasProps) => {
 
     /** Sets up our canvas and context on component mounting */
     useEffect(() => {
-        canvasElement.current!.width = 1000;
-        canvasElement.current!.height = 800;
+        canvasElement.current!.width = 700;
+        canvasElement.current!.height = 600;
         setContext(canvasElement.current!.getContext('2d')!);
     }, []);
 

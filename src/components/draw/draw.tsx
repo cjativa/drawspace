@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 
 import DrawCanvas from './drawCanvas';
 import DrawStrokeActions, { FILL_COLORS, STROKE_WIDTHS } from './drawStrokeActions';
@@ -15,6 +15,16 @@ const Draw = () => {
     const [fillColor, setFillColor] = useState<FILL_COLORS>('red');
     const [strokeWidth, setStrokeWidth] = useState<STROKE_WIDTHS>(10);
     const [eraserOn, setEraserOn] = useState<boolean>(false);
+
+    let elapsedDrawingTime = useRef<number>(0);
+
+    /** On component mount, start the timer */
+    useEffect(() => {
+
+        setInterval(() => {
+            elapsedDrawingTime.current += 1;
+        }, 1000);
+    }, []);
 
     /** Resets the reset state after a reset occurred */
     useEffect(() => {
@@ -33,11 +43,13 @@ const Draw = () => {
 
     /** Performs drawing saving workflow */
     const onSaveClick = () => {
+        console.log(elapsedDrawingTime);
         setSaveOccurred(true);
     };
 
     /** Performs drawing reset workflow */
     const onResetClick = () => {
+        elapsedDrawingTime.current = 0;
         setResetOccurred(true);
     };
 
@@ -46,9 +58,20 @@ const Draw = () => {
         setEraserOn(!eraserOn);
     };
 
+    /** Updates the fill color */
+    const updateFillColor = (color: FILL_COLORS) => {
+
+        // Set the color and toggle off eraser
+        setFillColor(color);
+
+        if (eraserOn) {
+            setEraserOn(false);
+        }
+    };
+
     return (
         <div className="draw">
-            <p>Draw to your hearts content ✏️</p>
+            <p className="draw__subtitle">Draw to your hearts content ✏️</p>
 
             {/** Canvas for drawing */}
             <DrawCanvas
@@ -62,7 +85,7 @@ const Draw = () => {
             {/** Action buttons */}
             <div className="draw__actions">
                 <DrawStrokeActions
-                    setFillColor={setFillColor}
+                    setFillColor={updateFillColor}
                     setStrokeWidth={setStrokeWidth}
                     toggleEraser={toggleEraser}
                 />
