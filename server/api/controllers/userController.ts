@@ -34,11 +34,24 @@ export default class UserController {
 
         // Get the user id and use it to retrieve the drawings
         const { userId } = request;
-
         const drawings = await UserService.getDrawings(userId);
 
         response
             .status(200)
             .json(drawings);
+    };
+
+    /** Deletes the requetsed drawing */
+    public static async deleteDrawing(request: express.Request, response: express.Response) {
+
+        // Get the user id to look up and delete the drawing
+        const { userId } = request;
+        const { id } = request.params;
+
+        await UserService.deleteDrawing(userId, parseInt(id));
+
+        response
+            .status(200)
+            .json('ok');
     };
 };

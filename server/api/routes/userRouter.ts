@@ -6,5 +6,6 @@ const UserRouter = express.Router();
 UserRouter.get('/', UserController.getUserDetails);
 UserRouter.post('/draw', UserController.saveDrawing);
 UserRouter.get('/drawings', UserController.getDrawings);
+UserRouter.delete('/draw/:id', UserController.deleteDrawing);
 
 export default UserRouter;

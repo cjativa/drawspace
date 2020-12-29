@@ -66,4 +66,15 @@ export default class UserService {
 
         return drawings;
     };
+
+    /** Deletes the drawing */
+    public static async deleteDrawing(userId: number, drawingId: number) {
+
+        await DatabaseClient.performQuery(`
+        DELETE 
+        FROM "drawings"
+        WHERE user_id = $1
+        AND id = $2
+        `, [userId, drawingId]);
+    };
 };
