@@ -56,7 +56,7 @@ const Login = (props: any) => {
             </div>
 
             { /** Display error content when the login response is available */
-                (loginResponse && loginResponse.success == false) &&
+                (loginResponse && loginResponse.success === false) &&
                 <div className="auth__error">
                     <p>There was an error logging you in — {loginResponse.message} </p>
                 </div>

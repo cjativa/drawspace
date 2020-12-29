@@ -64,6 +64,10 @@ const Authentication = () => {
                         <Route path="/sign-up">
                             <SignUp updateLoggedIn={updateLoggedIn} />
                         </Route>
+
+                        <Route exact path="/">
+                            <SignUp updateLoggedIn={updateLoggedIn} />
+                        </Route>
                     </Switch>
                 </div>
 
