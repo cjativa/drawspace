@@ -1,5 +1,65 @@
 .drawing-list {
     flex: 1;
 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    padding: 20px 0;
+
+    &__item {
+        width: 100%;
+        display: grid;
+        grid-template-rows: min-content 1fr;
+        row-gap: 20px;
+    }
+
+    &__cont {
+        width: 100%;
+        display: grid;
+        grid-template-rows: min-content 1fr;
+        grid-template-columns: 1fr;
+ 
+        row-gap: 20px; 
+
+        padding: 40px 30px;
+        background-color: #ffffff;
+        border-radius: 8px;
+
+        min-width: 400px;
+        min-height: 650px;
+    }
+
+    .item-header {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        //text-align: left;
+    }
+
+    .top {
+        font-weight: bold;
+    }
+
+    img {
+        border: 1px solid lightgray;
+    }
+
+    @media (min-width: 640px) {
+        
+        &__cont {
+            width: 600px;
+        }
+    }
     
+    @media (min-width: 768px) {
+        
+    }
+    
+    @media (min-width: 1024px) {
+    }
+    
+    @media (min-width: 1280px) {
+    }
 }

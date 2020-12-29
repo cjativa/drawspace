@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import UserService from '../../services/userService';
 
 const DrawingList = () => {
@@ -19,15 +20,34 @@ const DrawingList = () => {
 
     return (
         <div className="drawing-list">
-            {drawings.length > 0 && drawings.map((drawing) => {
-                return (
-                    <div className="drawing-list__item">
-                        {drawing.elapsed_time}
-                        {drawing.creation_time}
-                        {drawing.public}
-                    </div>
-                )
-            })}
+            <div className="drawing-list__cont">
+                <div className="item-header top">
+                    <span>Date Created</span>
+                    <span>Time Elapsed</span>
+                    <span>Visibility</span>
+                </div>
+                {drawings.length > 0 && drawings.map((drawing, index) => {
+
+                    const visibilityVal = (drawing.public)
+                    ? <Link to={`/draw/${drawing.public_url}`}>Public</Link>
+                    : <span>Private</span>;
+
+                    const timeVal = new Date(drawing.creation_time).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric' });
+
+                    return (
+                        <div className="drawing-list__item" key={`${drawing.id}__${index}`}>
+                            <div className="item-header">
+                                <span>{timeVal}</span>
+                                <span>{drawing.elapsed_time} seconds</span>
+                                <span>{visibilityVal}</span>
+                            </div>
+                            <div className="item-body">
+                                <img height="50px" width="50px" src={drawing.data} />
+                            </div>
+                        </div>
+                    )
+                })}
+            </div>
         </div>
     )
 };
