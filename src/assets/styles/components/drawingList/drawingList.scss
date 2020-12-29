@@ -22,7 +22,7 @@
         grid-template-columns: 1fr;
         justify-content: start;
 
-        row-gap: 50px; 
+        row-gap: 30px; 
 
         padding: 40px 30px;
         background-color: #ffffff;
@@ -46,6 +46,11 @@
         display: grid;
         row-gap: 20px;
         align-content: start;
+    }
+
+    .action-panel {
+        display: flex;
+        justify-content: space-between;
     }
 
     img {

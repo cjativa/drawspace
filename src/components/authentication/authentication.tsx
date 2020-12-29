@@ -28,10 +28,10 @@ const Authentication = () => {
         setIsLoggedIn(loggedIn);
     };
 
-    // If we're logged in, let's go to the draw screen
+    // If we're logged in, let's go to the drawings screen
     if (isLoggedIn) {
         return (
-            <Redirect to="/draw" />
+            <Redirect to="/drawings" />
         )
     }
 

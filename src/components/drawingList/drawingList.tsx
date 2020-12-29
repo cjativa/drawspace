@@ -1,15 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import UserService from '../../services/userService';
+import AuthenticationService from '../../services/authenticationService';
 
 const DrawingList = () => {
 
     const [drawings, setDrawings] = useState<any[]>([]);
+    const [details, setDetails] = useState<any>({});
 
     /** On mount, retrieve all available drawings for the user */
     useEffect(() => {
         fetchDrawings();
+        fetchDetails();
     }, []);
+
+    /** Fetches details for the user */
+    const fetchDetails = async () => {
+        const fetchedDetails = await UserService.retrieveDetails();
+        setDetails(fetchedDetails);
+    };
 
     /** Fetches drawings for the user */
     const fetchDrawings = async () => {
@@ -27,6 +36,11 @@ const DrawingList = () => {
         // Reload the drawings
         await fetchDrawings();
 
+    };
+
+    /** Handles signing the user out */
+    const onSignOutClick = () => {
+        AuthenticationService.persistLoginState(false, '');
     };
 
     return (
@@ -70,8 +84,11 @@ const DrawingList = () => {
                         <p>You have no drawings available so <Link to="/draw">create one</Link></p>
                     }
                 </div>
-                
-                <Link to="/draw">Create a new drawing</Link>
+
+                <div className="action-panel">
+                    <Link to="/draw">Create a new drawing, {details.name}</Link>
+                    <Link onClick={onSignOutClick} to="/">Sign Out</Link>
+                </div>
             </div>
         </div>
     )
