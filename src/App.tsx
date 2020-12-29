@@ -10,7 +10,7 @@ const App = () => {
       <BrowserRouter>
         <Switch>
 
-          {/** Landing page */}
+          {/** Draw page */}
           <Route path="/draw">
             <Draw />
           </Route>
@@ -22,6 +22,11 @@ const App = () => {
 
           {/** Login page */}
           <Route path="/login">
+            <Authentication />
+          </Route>
+
+          {/** Main page - you should always be at the draw screen or sign-up/login screen */}
+          <Route exact path="/">
             <Authentication />
           </Route>
 
