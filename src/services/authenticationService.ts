@@ -1,9 +1,9 @@
 import ApiService from './apiService';
 
-
 export interface AuthenticationResponse {
     success: boolean,
-    message?: string
+    message?: string,
+    token?: string
 }
 
 export default class AuthenticationService {
@@ -21,11 +21,11 @@ export default class AuthenticationService {
         if (response.status === 200) {
 
             // Update the API service as we're now authenticated
-            const authToken = response.data;
-            ApiService.setBearerToken(authToken);
+            const { token } = response.data;
 
             return {
                 success: true,
+                token
             }
         }
 
@@ -39,8 +39,14 @@ export default class AuthenticationService {
     };
 
     /** Persist the login state into local storage */
-    public static persistLoginState(loggedIn: boolean) {
+    public static persistLoginState(loggedIn: boolean, token: string) {
         localStorage.setItem('signedIn', loggedIn.toString());
+        localStorage.setItem('token', token);
+    };
+
+    /** Returns the token from local storage */
+    public static getToken(): string {
+        return localStorage.getItem('token') || '';
     };
 
     /** Retrieves the login state */

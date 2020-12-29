@@ -1,4 +1,5 @@
 import axios, { Method, AxiosResponse } from 'axios';
+import AuthenticationService from './authenticationService';
 
 export interface APIRequestConfig {
 
@@ -12,7 +13,7 @@ export default class ApiService {
     private static bearerToken: string;
 
     public static setBearerToken(token: string) {
-        this.bearerToken = token;
+        ApiService.bearerToken = token;
     };
 
     public static async performRequest<T>(config: APIRequestConfig): Promise<AxiosResponse<any>> {
@@ -23,7 +24,7 @@ export default class ApiService {
         const url = `/api/${config.endpoint}`;
         const headers = {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${this.bearerToken}`
+            'Authorization': `Bearer ${AuthenticationService.getToken()}`
         }
 
         try {
@@ -37,6 +38,10 @@ export default class ApiService {
 
         catch (error) {
             response = error.response;
+            
+            if (response.status === 403) {
+                AuthenticationService.persistLoginState(false, '');
+            }
         }
 
         return response;

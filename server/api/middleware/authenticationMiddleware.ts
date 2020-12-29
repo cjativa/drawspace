@@ -1,5 +1,5 @@
 import express from 'express';
-import jwt from 'jsonwebtoken';
+import jwt, { TokenExpiredError } from 'jsonwebtoken';
 import Config from '../../utils/config';
 
 export const isSessionAuthenticated = async (request: express.Request, response: express.Response, next: express.NextFunction) => {
@@ -16,15 +16,23 @@ export const isSessionAuthenticated = async (request: express.Request, response:
 
     // Else, there's a token. Let's see if it's valid
     else {
-        const userPayload = jwt.verify(token, Config.jwtSecretKey) as { userId: number, username: string };
+        try {
+            const userPayload = jwt.verify(token, Config.jwtSecretKey) as { userId: number, username: string };
 
-        // If there token is invalid (i.e. no payload), clear it and let the client know
-        if (!userPayload) {
-            response.status(403).json('Invalid or missing authorization token');
+            // If there token is invalid (i.e. no payload), clear it and let the client know
+            if (!userPayload) {
+                return response.status(403).json('Invalid or missing authorization token');
+            }
+
+            // Else, token is valid so let's attach the user id to the request
+            else { request.userId = userPayload.userId; }
         }
 
-        // Else, token is valid so let's attach the user id to the request
-        else { request.userId = userPayload.userId; }
+        catch (error) {
+            if (error instanceof TokenExpiredError) {
+                return response.status(403).json('Invalid or missing authorization token');
+            }
+        }
 
         next();
     }
