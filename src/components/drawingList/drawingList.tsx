@@ -40,6 +40,8 @@ const DrawingList = () => {
                 </div>
 
                 <div className="bottom">
+
+                    {/** If there's drawings available, display them */}
                     {drawings.length > 0 && drawings.map((drawing, index) => {
 
                         const visibilityVal = (drawing.public)
@@ -62,8 +64,14 @@ const DrawingList = () => {
                             </div>
                         )
                     })}
-                </div>
 
+                    {/** Otherwise, no drawings available */}
+                    {drawings.length == 0 &&
+                        <p>You have no drawings available so <Link to="/draw">create one</Link></p>
+                    }
+                </div>
+                
+                <Link to="/draw">Create a new drawing</Link>
             </div>
         </div>
     )
