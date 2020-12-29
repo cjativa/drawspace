@@ -51,7 +51,7 @@ const DrawStrokeActions = (props: IDrawStrokeActionsProps) => {
 
             {/** Container for eraser tool */}
             <div className="dsa__eraser panel">
-                <button onClick={() => props.toggleEraser()} />
+                <button onClick={() => props.toggleEraser()}>Eraser</button>
             </div>
         </div>
     )
