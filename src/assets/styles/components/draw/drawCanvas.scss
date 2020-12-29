@@ -1,6 +1,9 @@
 .draw-canvas {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
     .canvas {
-       box-sizing: border-box; 
        border-radius: 20px;
     }
 }
