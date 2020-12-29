@@ -8,15 +8,26 @@ const DrawingList = () => {
 
     /** On mount, retrieve all available drawings for the user */
     useEffect(() => {
-
-        const fetchDrawings = async () => {
-            const fetchedDrawings = await UserService.getAllDrawings();
-            setDrawings(fetchedDrawings);
-        };
-
         fetchDrawings();
-
     }, []);
+
+    /** Fetches drawings for the user */
+    const fetchDrawings = async () => {
+        const fetchedDrawings = await UserService.getAllDrawings();
+        setDrawings(fetchedDrawings);
+    };
+
+    /** Handles deleting the selected drawing */
+    const onDeleteClick = async (event: any) => {
+
+        // Delete this image by id
+        const { id } = event.target;
+        await UserService.deleteDrawing(id);
+
+        // Reload the drawings
+        await fetchDrawings();
+
+    };
 
     return (
         <div className="drawing-list">
@@ -25,12 +36,13 @@ const DrawingList = () => {
                     <span>Date Created</span>
                     <span>Time Elapsed</span>
                     <span>Visibility</span>
+                    <span>Delete</span>
                 </div>
                 {drawings.length > 0 && drawings.map((drawing, index) => {
 
                     const visibilityVal = (drawing.public)
-                    ? <Link to={`/draw/${drawing.public_url}`}>Public</Link>
-                    : <span>Private</span>;
+                        ? <Link to={`/draw/${drawing.public_url}`}>Public</Link>
+                        : <span>Private</span>;
 
                     const timeVal = new Date(drawing.creation_time).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric' });
 
@@ -40,6 +52,7 @@ const DrawingList = () => {
                                 <span>{timeVal}</span>
                                 <span>{drawing.elapsed_time} seconds</span>
                                 <span>{visibilityVal}</span>
+                                <button id={drawing.id} onClick={onDeleteClick}>Delete</button>
                             </div>
                             <div className="item-body">
                                 <img height="50px" width="50px" src={drawing.data} />

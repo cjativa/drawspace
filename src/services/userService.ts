@@ -50,4 +50,13 @@ export default class UserService {
             return []
         }
     };
+
+    /** Submits a deletion request for the provided drawing */
+    public static async deleteDrawing(drawingId: number) {
+
+        const response = await ApiService.performRequest<any[]>({
+            endpoint: `user/draw/${drawingId}`,
+            method: 'DELETE'
+        });
+    };
 };

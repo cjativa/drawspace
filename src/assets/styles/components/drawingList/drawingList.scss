@@ -34,8 +34,7 @@
     .item-header {
         width: 100%;
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        //text-align: left;
+        grid-template-columns: 1fr 1fr 1fr min-content;
     }
 
     .top {
