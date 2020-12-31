@@ -22,12 +22,13 @@
         height: 650px;
     }
 
-    &__btn {
-        text-align: right;
-    }
-
     &__error {
         color: red;
+    }
+
+    .brand-btn {
+        color: #ffffff;
+        background-color: #fa73ac;
     }
 
     .sel {
