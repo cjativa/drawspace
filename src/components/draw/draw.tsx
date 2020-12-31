@@ -1,11 +1,19 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import DrawCanvas from './drawCanvas';
 import DrawStrokeActions, { FILL_COLORS, STROKE_WIDTHS } from './drawStrokeActions';
 import DrawGeneralActions from './drawGeneralActions';
 import UserService from '../../services/userService';
 
-const Draw = () => {
+interface IDrawProps {
+    isPublic: boolean,
+    drawingData: string,
+    wasFetched: boolean,
+};
+
+const Draw = (props: IDrawProps) => {
+
+    const history = useHistory();
 
     const [saveOccurred, setSaveOccurred] = useState<boolean>(false);
     const [resetOccurred, setResetOccurred] = useState<boolean>(false);
@@ -23,10 +31,10 @@ const Draw = () => {
 
     /** On component mount, start the timer */
     useEffect(() => {
-
         setInterval(() => {
             elapsedDrawingTime.current += 1;
         }, 1000);
+
     }, []);
 
     /** When reset occurs, set it back to initial state afterward */
@@ -47,9 +55,16 @@ const Draw = () => {
     useEffect(() => {
 
         const handleSave = async () => {
+
             // Save the drawing and update the state
             const drawingSave = await UserService.performDrawingSave(drawingData.current, elapsedDrawingTime.current, isPublic);
             setSaveSuccess(drawingSave.success);
+
+            // If there was no id for this drawing, then this is a newly created drawing
+            // and we want to navigate to the created drawing
+            if (!props.wasFetched) {
+                history.push(`/draw/${drawingSave.id}`);
+            }
 
             // After 2 seconds, reset the save success
             setTimeout(() => {
@@ -96,7 +111,7 @@ const Draw = () => {
                 <Link to="/drawings">Back to List</Link> |
                     Draw to your hearts content ✏️
                 {saveSuccess &&
-                    <span>
+                    <span className="draw__save">
                         Save was successful
                     </span>
                 }

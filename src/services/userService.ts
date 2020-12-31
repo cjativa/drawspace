@@ -2,7 +2,8 @@ import ApiService from './apiService';
 
 export interface IDrawingSave {
     success: boolean,
-    publicUrl?: string
+    publicUrl?: string,
+    id?: number
 };
 
 export default class UserService {
@@ -31,7 +32,8 @@ export default class UserService {
         if (response.status === 200) {
             return {
                 success: true,
-                publicUrl: response.data.publicUrl
+                publicUrl: response.data.publicUrl,
+                id: response.data.id
             }
         }
 
@@ -69,5 +71,24 @@ export default class UserService {
             endpoint: `user/draw/${drawingId}`,
             method: 'DELETE'
         });
+    };
+
+    /** Retrieves all drawings for the user */
+    public static async geDrawing(drawingId: string) {
+
+        const response = await ApiService.performRequest<any[]>({
+            endpoint: `user/draw/${drawingId}`,
+            method: 'GET'
+        });
+
+        // Login was successful
+        if (response.status === 200) {
+            return response.data
+        }
+
+        // Login was unsuccessful
+        else {
+            return {}
+        }
     };
 };

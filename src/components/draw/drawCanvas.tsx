@@ -33,6 +33,7 @@ const DrawCanvas = (props: IDrawCanvasProps) => {
         if (context) {
             context.lineJoin = 'round';
             context.lineCap = 'round';
+            console.log(props.drawingData);
         }
     }, [context]);
 
