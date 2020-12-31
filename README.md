@@ -1,46 +1,55 @@
-# Getting Started with Create React App
+# DrawSpace
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Hi - this is the repository for the DrawSpace application. It exposes these routes for the UI
+- `/login` - Where you can login to your account
+- `/sign-up` - Where you can register for an account
+- `/draw` - Where you can create a new drawing (protected route)
+- `/drawings` - List of drawings that a user has created (protected route)
+- `/draw/:id` - View an existing drawing (protected route)
 
-## Available Scripts
+The app is written with React TypeScript and NodeJS (TypeScript) using Express. PostgreSQL is the persistence layer. There is a debugging script for the Node server in the `.vscode` directory.
 
-In the project directory, you can run:
+# Authentication
 
-### `yarn start`
+The authentication method is simple - when you login/sign-up for an account, a JWT token is provided in the response. This is then stored in local storage and provided with any API request that requires authentication. There is middleware that validates that a JWT token has been provided for protected routes, and that it has not yet expired (1-hour TTL).
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Once the JWT is successfully parsed, the `userId` is extracted from the payload and attached to the Express request for subsequent user-related actions.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+I typically opt for authentication via HTTP-Only cookies set by the server, and therein storing a JWT containing payload information, such as roles and security permissions. For sake of time and simplicity, I did use local storage persisting of the JWT, which is not as secure.
 
-### `yarn test`
+The login and sign-up pages display a small error if your credentials were not located in the database, or if you try to sign up with an already-existing username. No validation on the provided input as of yet, so there's no minimum-password requirements.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+# Drawing page
 
-### `yarn build`
+You can see the main drawing page is made up of several sub-components; 
+- The DrawCanvas component, solely responsible for rendering and modifying the canvas
+- The DrawGeneralActions component, displaying the controls for resetting a drawing, saving it, and setting the privacy level of the drawing
+- The DrawStrokeActions component, displaying the different colors for the brush, the different sizes of the brush, toggling the eraser
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Most of the application renders nicely and fits on mobile, but the canvas does not resize on mobile so this page is completely broken on mobile. Additionally, you can not draw on mobile due to using the mouse event handlers for determining when the canvas draws. If I had more time available, I'd have dynamically resized the canvas according to the viewport with JavaScript as this is not possible with CSS from what I researched.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Also, if you create a drawing, save it, and edit that same drawing and save again, rather than modifying the existing drawing record in the database, this creates a new drawing.
+If I had more time, I would add this functionality, it would not be too many lines of code -- mainly just having to check if we're on the `/draw` or `/draw/:id` page, and determining from there if we need to send a POST request (to create the new drawing) or PUT request to modify the existing one. This would be very easy to add in the backend.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+I would have also liked to make the "Eraser" button a toggle switch, but did not have enough time to spare. Additionally, would have preferred to make the brush size selections more UX-friendly, as currently it is difficult to click the smallest brush size.
 
-### `yarn eject`
+# Drawings List page
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+I misread the requirements for the main page; I hadn't realized it was to be a gallery of public drawings from all users. Currently, it displays all drawings for the signed in user, along with the creation date and time, the time-to-draw, a thumbnail, and allows a user to delete the drawings.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+It would be very simple to repurpose this list to be able to show all public drawings of all users, and still serve its function to show all drawings of the signed in user. I simply had misread the spec so my apologies. 
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+For public images on this page, there is a generated link for future sharing. The link works, but only when the user is authenticated. It doesn't work if a user isn't signed in, but this would be easy to change in the future. It is a trade-off from having made the Draw page a protected route, as well as the API only being able to serve requests for an authenticated user. 
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+In the future, I would have made better decisions early on about which API endpoints are public, and which are private, as most of the app functions right now using private API's.
 
-## Learn More
+# Running the App
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+1. Start your local PostgreSQL server and make note of the hostname, database name, username, and password
+2. Modify the existing `.env` with your database information (normally, the `.env` file would not be committed to source control, but for the sake of quickly cloning and running the server, it is)
+3. Run `npm install`
+4. Compile the TypeScript to the `dist` folder using `npm run build`
+5. Start the server with `npm run server`
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Sign up for an account and begin drawing.
+
