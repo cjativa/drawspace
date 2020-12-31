@@ -77,4 +77,17 @@ export default class UserService {
         AND id = $2
         `, [userId, drawingId]);
     };
+
+    /** Retrieves a single drawing by id */
+    public static async getDrawing(id: string): Promise<IDrawing> {
+
+        // Persist the drawing
+        const drawing = (await DatabaseClient.performQuery<IDrawing>(`
+         SELECT * 
+         FROM "drawings"
+         WHERE id = $1
+         `, [id])).pop();
+
+        return drawing;
+    };
 };

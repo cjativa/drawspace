@@ -41,6 +41,18 @@ export default class UserController {
             .json(drawings);
     };
 
+    /** Retrieves a single drawing */
+    public static async getDrawing(request: express.Request, response: express.Response) {
+
+        // Get the user id and use it to retrieve the drawings
+        const { id } = request.params;
+        const drawing = await UserService.getDrawing(id);
+
+        response
+            .status(200)
+            .json(drawing);
+    };
+
     /** Deletes the requetsed drawing */
     public static async deleteDrawing(request: express.Request, response: express.Response) {
 
