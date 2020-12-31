@@ -7,7 +7,7 @@ Hi - this is the repository for the DrawSpace application. It exposes these rout
 - `/drawings` - List of drawings that a user has created (protected route)
 - `/draw/:id` - View an existing drawing (protected route)
 
-The app is written with React TypeScript and NodeJS (TypeScript) using Express. PostgreSQL is the persistence layer. There is a debugging script for the Node server in the `.vscode` directory.
+The app is written with React TypeScript and NodeJS (TypeScript) using Express. PostgreSQL is the persistence layer. There is a debugging script for the Node server in the `.vscode` directory. Node v12.0.0 and above is needed for running it.
 
 # Authentication
 
