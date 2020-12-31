@@ -59,7 +59,7 @@ const DrawingList = () => {
                     {drawings.length > 0 && drawings.map((drawing, index) => {
 
                         const visibilityVal = (drawing.public)
-                            ? <Link to={`/draw/${drawing.public_url}`}>Public</Link>
+                            ? <Link to={`/draw/${drawing.id}`}>Public</Link>
                             : <span>Private</span>;
 
                         const timeVal = new Date(drawing.creation_time).toLocaleString('en-US',
