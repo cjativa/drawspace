@@ -66,7 +66,7 @@ const Authentication = () => {
                         </Route>
 
                         <Route exact path="/">
-                            <SignUp updateLoggedIn={updateLoggedIn} />
+                            <Redirect to="/login" />
                         </Route>
                     </Switch>
                 </div>
