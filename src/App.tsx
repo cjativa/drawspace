@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import Draw from './components/draw/draw';
+import DrawContainer from './components/draw/drawContainer';
 import DrawingList from './components/drawingList/drawingList';
 import Authentication from './components/authentication/authentication';
 import ProtectedRoute from './components/protectedRoute';
@@ -20,9 +20,9 @@ const App = () => {
           </Route>
 
           {/** Draw page */}
-          <Route path="/draw">
+          <Route path="/draw/:id?">
             <ProtectedRoute>
-              <Draw />
+              <DrawContainer />
             </ProtectedRoute >
           </Route>
 
