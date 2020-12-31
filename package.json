@@ -19,6 +19,8 @@
   "scripts": {
     "start": "PORT=3000 react-scripts start",
     "client-build": "react-scripts build",
+    "build": "rm -rf dist; npm run client-build; npm run compile-server",
+    "postbuild": "mv build dist/",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "compile-server": "tsc -p server",
