@@ -9,6 +9,8 @@ Hi - this is the repository for the DrawSpace application. It exposes these rout
 
 The app is written with React TypeScript and NodeJS (TypeScript) using Express. PostgreSQL is the persistence layer. There is a debugging script for the Node server in the `.vscode` directory. Node v12.0.0 and above is needed for running it.
 
+Upon server start, the database is initialized and necessary tables are created.
+
 # Authentication
 
 The authentication method is simple - when you login/sign-up for an account, a JWT token is provided in the response. This is then stored in local storage and provided with any API request that requires authentication. There is middleware that validates that a JWT token has been provided for protected routes, and that it has not yet expired (1-hour TTL).
