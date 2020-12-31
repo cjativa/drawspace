@@ -81,7 +81,10 @@ const DrawingList = () => {
 
                     {/** Otherwise, no drawings available */}
                     {drawings.length == 0 &&
-                        <p>You have no drawings available so <Link to="/draw">create one</Link></p>
+                        <p>
+                            You have no drawings available so 
+                            <Link to="/draw"> create one</Link>
+                        </p>
                     }
                 </div>
 
