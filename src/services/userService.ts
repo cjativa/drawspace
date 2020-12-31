@@ -88,7 +88,7 @@ export default class UserService {
 
         // Login was unsuccessful
         else {
-            return {}
+            return []
         }
     };
 };

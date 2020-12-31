@@ -62,7 +62,8 @@ const DrawingList = () => {
                             ? <Link to={`/draw/${drawing.public_url}`}>Public</Link>
                             : <span>Private</span>;
 
-                        const timeVal = new Date(drawing.creation_time).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric' });
+                        const timeVal = new Date(drawing.creation_time).toLocaleString('en-US',
+                            { month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric' });
 
                         return (
                             <div className="drawing-list__item" key={`${drawing.id}__${index}`}>
@@ -73,7 +74,9 @@ const DrawingList = () => {
                                     <button id={drawing.id} onClick={onDeleteClick}>Delete</button>
                                 </div>
                                 <div className="item-body">
-                                    <img height="50px" width="50px" src={drawing.data} />
+                                    <Link to={`/draw/${drawing.id}`}>
+                                        <img height="50px" width="50px" src={drawing.data} />
+                                    </Link>
                                 </div>
                             </div>
                         )
@@ -82,7 +85,7 @@ const DrawingList = () => {
                     {/** Otherwise, no drawings available */}
                     {drawings.length == 0 &&
                         <p>
-                            You have no drawings available so 
+                            You have no drawings available so
                             <Link to="/draw"> create one</Link>
                         </p>
                     }
