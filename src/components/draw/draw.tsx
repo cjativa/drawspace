@@ -34,7 +34,6 @@ const Draw = (props: IDrawProps) => {
         setInterval(() => {
             elapsedDrawingTime.current += 1;
         }, 1000);
-
     }, []);
 
     /** When reset occurs, set it back to initial state afterward */
@@ -48,7 +47,6 @@ const Draw = (props: IDrawProps) => {
             setFillColor('red');
             setStrokeWidth(10);
         }
-
     }, [resetOccurred]);
 
     /** Perform actions when the save occurs */
@@ -108,7 +106,7 @@ const Draw = (props: IDrawProps) => {
     return (
         <div className="draw">
             <p className="draw__subtitle">
-                <Link to="/drawings">Back to List</Link> |
+                <Link to="/drawings" className='brand-green'>Back to List</Link> |
                     Draw to your hearts content ✏️
                 {saveSuccess &&
                     <span className="draw__save">
@@ -125,6 +123,7 @@ const Draw = (props: IDrawProps) => {
                 strokeWidth={strokeWidth}
                 eraserOn={eraserOn}
                 drawingData={drawingData}
+                storedData={props.drawingData}
             />
 
             {/** Action buttons */}

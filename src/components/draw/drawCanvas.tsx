@@ -9,7 +9,9 @@ interface IDrawCanvasProps {
 
     fillColor: FILL_COLORS,
     strokeWidth: STROKE_WIDTHS,
-    eraserOn: boolean
+    eraserOn: boolean,
+
+    storedData: string
 };
 
 const DrawCanvas = (props: IDrawCanvasProps) => {
@@ -25,17 +27,25 @@ const DrawCanvas = (props: IDrawCanvasProps) => {
     useEffect(() => {
         canvasElement.current!.width = 700;
         canvasElement.current!.height = 600;
-        setContext(canvasElement.current!.getContext('2d')!);
+
+        const canvasContext = canvasElement.current!.getContext('2d')!;
+        canvasContext.lineJoin = 'round';
+        canvasContext.lineCap = 'round';
+
+        setContext(canvasContext);
     }, []);
 
-    /** Once context is ready, styke it */
+    /** Draw stored draw data */
     useEffect(() => {
-        if (context) {
-            context.lineJoin = 'round';
-            context.lineCap = 'round';
-            console.log(props.drawingData);
+        if (props.storedData) {
+
+            const img = new Image;
+            img.onload = () => context!.drawImage(img, 0, 0);
+            img.src = props.storedData;
+            
+            setContext(context);
         }
-    }, [context]);
+    }, [props.storedData]);
 
     /** Handles resetting the canvas */
     useEffect(() => {
@@ -80,7 +90,7 @@ const DrawCanvas = (props: IDrawCanvasProps) => {
     };
 
     /** Function that handles pausing drawing */
-    const pauseDrawing = (event: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => {
+    const pauseDrawing = () => {
         if (isDrawing) {
             setIsDrawing(false);
         }
